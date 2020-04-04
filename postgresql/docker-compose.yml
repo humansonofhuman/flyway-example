@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:12.2
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: P@ssw0rd
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: db
+    ports:
+      - "5432:5432"
+    networks:
+      - localdb_network
+    volumes:
+      - postgresql:/var/lib/postgresql
+
+  flyway:
+    image: flyway/flyway
+    command: info migrate info
+    environment:
+      FLYWAY_URL: jdbc:postgresql://db:5432/postgres
+      FLYWAY_USER: postgres
+      FLYWAY_PASSWORD: P@ssw0rd
+      FLYWAY_CONNECT_RETRIES: 60
+    volumes:
+      - ./database/flyway:/flyway/sql # directorio para tomar el/los scripts de migración
+    networks: 
+      - localdb_network # Red de acceso a la base de datos para aplicar el/los scripts
+    depends_on:
+      - db
+
+volumes:
+  postgresql:
+    driver: local
+
+networks: 
+  localdb_network:
+    driver: bridge
