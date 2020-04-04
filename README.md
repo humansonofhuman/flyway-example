@@ -1,6 +1,9 @@
 # flyway-example
 Ejemplo de como utilizar docker-compose y flyway para montar una base de datos con estructura y datos para desarollo
 
+Se utiliza la base de datos llamada [Sakila](https://dev.mysql.com/doc/sakila/en/) que se
+[ha porteado a varias bases de datos](https://github.com/jOOQ/jOOQ/tree/master/jOOQ-examples/Sakila)
+
 ## Estructura del proyecto
 Dentro del proyecto se encuentra una carpeta por cada base de datos de la que se da ejemplo
 
@@ -23,6 +26,8 @@ mysql
         ├── V1__create_schema.sql
         └── V1.1__load_initial_data.sql
 ```
+
+* se dividió en varios archivos la carga de los datos iniciales porque era muy pesado
 
 ## Pre requisitos
 
